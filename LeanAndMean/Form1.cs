@@ -31,7 +31,8 @@ namespace LeanAndMean
             bool female = false;
             string lossPerWeek = "";
             string activityLevel = "";
-            float activityMultiplier = 0, weightConv, heightConv, maleBMR, femaleBMR, maleTDEE, femaleTDEE, BMI;
+            string macros = "";
+            float activityMultiplier = 0, weightConv, heightConv, maleBMR, femaleBMR, maleTDEE, femaleTDEE, BMI, protein, fat, carbs;
             const float IN_TO_CM = 2.54f;
             const float LB_TO_KG = 0.453592f;
 
@@ -45,87 +46,122 @@ namespace LeanAndMean
             {
                 MessageBox.Show("Please enter a valid weight.");
             }
-           
-            try
+            finally
             {
-                heightFeet = int.Parse(heightftTextbox.Text);
-                heightInches = int.Parse(heightinTextbox.Text);
-            }
-            catch
-            {
-                MessageBox.Show("Please enter a valid height.");
+                try
+                {
+                    heightFeet = int.Parse(heightftTextbox.Text);
+                    heightInches = int.Parse(heightinTextbox.Text);
+                }
+                catch
+                {
+                    MessageBox.Show("Please enter a valid height.");
+                }
+
+                finally
+                {
+                    try
+                    {
+                        age = int.Parse(ageTextbox.Text);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Please enter a valid age.");
+                    }
+                    finally
+                    {
+                        try
+                        {
+                            if (maleButton.Checked)
+                            {
+                                male = true;
+                            }
+                            else if (femaleButton.Checked)
+                            {
+                                female = true;
+                            }
+                            else
+                            {
+                                throw new GenderNotFoundException("Please select a gender");
+                            }
+                        }
+                        catch (GenderNotFoundException msg)
+                        {
+                            MessageBox.Show(msg.Message);
+                        }
+
+                        finally
+                        {
+                            try
+                            {
+                                if (lossPerWeekComboBox.SelectedIndex != -1)
+                                {
+                                    lossPerWeek = lossPerWeekComboBox.SelectedItem.ToString();
+                                }
+                                else
+                                {
+                                    throw new LossAmountNotFoundException("Please select an amount to lose.");
+                                }
+                            }
+                            catch (LossAmountNotFoundException msg)
+                            {
+                                MessageBox.Show(msg.Message);
+                            }
+
+                            finally
+                            {
+                                try
+                                {
+                                    if (activityLevelComboBox.SelectedIndex != -1)
+                                    {
+                                        activityLevel = activityLevelComboBox.SelectedItem.ToString();
+
+                                    }
+                                    else
+                                    {
+                                        throw new ActivityLevelNotFoundException("Please select an activity level.");
+                                    }
+                                }
+                                catch (ActivityLevelNotFoundException msg)
+                                {
+                                    MessageBox.Show(msg.Message);
+                                }
+                            }
+                        }
+                    }
+                }
+
             }
 
             try
             {
-                age = int.Parse(ageTextbox.Text);
-            }
-            catch
-            {
-                MessageBox.Show("Please enter a valid age.");
-            }
-            try
-            {
-                if (maleButton.Checked)
+                if (macroComboBox.SelectedIndex != -1)
                 {
-                    male = true;
-                }
-                else if (femaleButton.Checked)
-                {
-                    female = true;
+                    macros = macroComboBox.SelectedItem.ToString();
+
                 }
                 else
                 {
-                    throw new GenderNotFoundException("Please select a gender");
+                    throw new MacroNotFoundException("Please select a macro.");
                 }
             }
-            catch (GenderNotFoundException msg)
-            {
-                MessageBox.Show(msg.Message);
-            }
-
-            try
-            {
-                if (lossPerWeekComboBox.SelectedIndex != -1)
-                {
-                    lossPerWeek = lossPerWeekComboBox.SelectedItem.ToString();
-                }
-                else
-                {
-                    throw new LossAmountNotFoundException("Please select an amount to lose.");
-                }
-            }
-            catch (LossAmountNotFoundException msg)
-            {
-                MessageBox.Show(msg.Message);
-            }
-
-            try
-            {
-                if (activityLevelComboBox.SelectedIndex != -1)
-                {
-                    activityLevel = activityLevelComboBox.SelectedItem.ToString();
-
-                }
-                else
-                {
-                    throw new ActivityLevelNotFoundException("Please select an activity level.");
-                }
-            }
-            catch (ActivityLevelNotFoundException msg)
+            catch (MacroNotFoundException msg)
             {
                 MessageBox.Show(msg.Message);
             }
 
             switch (lossPerWeek)
             {
-                case "Half a pound per week.":
+                case "Maintain weight.":
+                    amountToLoseMultiplier = 0;
+                    break;
+                case "0.5 lbs":
                     amountToLoseMultiplier = 250;
                     break;
-                case "One pound per week.":
+                case "1 lb":
                     amountToLoseMultiplier = 500;
                     break;
-                case "Two pounds per week.":
+                case "2 lbs":
                     amountToLoseMultiplier = 1000;
                     break;
                 default:
@@ -170,6 +206,31 @@ namespace LeanAndMean
                 //Print details
                 caloriesOutputLabel.Text = maleTDEE.ToString();
 
+                switch (macros)
+                {
+                    case "Maintain":
+                        carbs = maleTDEE * 0.5f;
+                        protein = maleTDEE * 0.2f;
+                        fat = maleTDEE * 0.3f;
+                        macroLabelOutput.Text = "Fats: " + fat + " Protein: " + protein + " Carbs: " + carbs;
+                        break;
+                    case "Bulk":
+                        carbs = maleTDEE * 0.3f;
+                        protein = maleTDEE * 0.5f;
+                        fat = maleTDEE * 0.2f;
+                        macroLabelOutput.Text = "Fats: " + fat + " Protein: " + protein + " Carbs: " + carbs;
+                        activityMultiplier = 1.375f;
+                        break;
+                    case "Cut":
+                        carbs = maleTDEE * 0.3f;
+                        protein = maleTDEE * 0.4f;
+                        fat = maleTDEE * 0.3f;
+                        macroLabelOutput.Text = "Fats: " + fat + " Protein: " + protein + " Carbs: " + carbs;
+                        activityMultiplier = 1.55f;
+                        break;
+
+                }
+
             }
             else if (female == true)
             {
@@ -178,6 +239,32 @@ namespace LeanAndMean
 
                 //Print details
                 caloriesOutputLabel.Text = femaleTDEE.ToString();
+
+                switch (macros)
+                {
+                    case "Maintain":
+                        carbs = femaleTDEE * 0.5f;
+                        protein = femaleTDEE * 0.2f;
+                        fat = femaleTDEE * 0.3f; 
+                        macroLabelOutput.Text = "Fats: " + fat + " Protein: " + protein + " Carbs: " + carbs;
+                        break;
+                    case "Bulk":
+                        carbs = femaleTDEE * 0.3f;
+                        protein = femaleTDEE * 0.5f;
+                        fat = femaleTDEE * 0.2f;
+                        macroLabelOutput.Text = "Fats: " + fat + " Protein: " + protein + " Carbs: " + carbs;
+                        activityMultiplier = 1.375f;
+                        break;
+                    case "Cut":
+                        carbs = femaleTDEE * 0.3f;
+                        protein = femaleTDEE * 0.4f;
+                        fat = femaleTDEE * 0.3f;
+                        macroLabelOutput.Text = "Fats: " + fat + " Protein: " + protein + " Carbs: " + carbs;
+                        activityMultiplier = 1.55f;
+                        break;
+
+                }
+
             }
 
         }
@@ -198,6 +285,26 @@ namespace LeanAndMean
             activityLevelComboBox.SelectedIndex = -1;
             lossPerWeekComboBox.SelectedIndex = -1;
 
+        }
+    }
+
+    [Serializable]
+    internal class MacroNotFoundException : Exception
+    {
+        public MacroNotFoundException()
+        {
+        }
+
+        public MacroNotFoundException(string message) : base(message)
+        {
+        }
+
+        public MacroNotFoundException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected MacroNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
         }
     }
 

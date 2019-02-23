@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -51,7 +52,17 @@
             this.lossPerWeekComboBox = new System.Windows.Forms.ComboBox();
             this.activityLevelComboBox = new System.Windows.Forms.ComboBox();
             this.caloriesOutputLabel = new System.Windows.Forms.Label();
+            this.BMIhelp = new System.Windows.Forms.ToolTip(this.components);
+            this.helpBMI = new System.Windows.Forms.PictureBox();
+            this.infoTDEE = new System.Windows.Forms.ToolTip(this.components);
+            this.helpTDEE = new System.Windows.Forms.PictureBox();
+            this.macroLabel = new System.Windows.Forms.Label();
+            this.macroComboBox = new System.Windows.Forms.ComboBox();
+            this.macroLabelOutputLabel = new System.Windows.Forms.Label();
+            this.macroLabelOutput = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.helpBMI)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.helpTDEE)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -145,7 +156,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(87, 243);
+            this.label7.Location = new System.Drawing.Point(87, 227);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(73, 13);
             this.label7.TabIndex = 7;
@@ -154,7 +165,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(132, 341);
+            this.label8.Location = new System.Drawing.Point(132, 372);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(60, 13);
             this.label8.TabIndex = 8;
@@ -163,7 +174,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(7, 389);
+            this.label9.Location = new System.Drawing.Point(7, 420);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(194, 13);
             this.label9.TabIndex = 9;
@@ -172,7 +183,7 @@
             // bmiOutputLabel
             // 
             this.bmiOutputLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.bmiOutputLabel.Location = new System.Drawing.Point(209, 335);
+            this.bmiOutputLabel.Location = new System.Drawing.Point(209, 366);
             this.bmiOutputLabel.Name = "bmiOutputLabel";
             this.bmiOutputLabel.Size = new System.Drawing.Size(103, 25);
             this.bmiOutputLabel.TabIndex = 10;
@@ -240,9 +251,10 @@
             // 
             this.lossPerWeekComboBox.FormattingEnabled = true;
             this.lossPerWeekComboBox.Items.AddRange(new object[] {
-            "Half a pound per week.",
-            "One pound per week.",
-            "Two pounds per week."});
+            "0.5 lbs",
+            "1 lb",
+            "2 lbs",
+            "Maintain weight."});
             this.lossPerWeekComboBox.Location = new System.Drawing.Point(166, 197);
             this.lossPerWeekComboBox.Name = "lossPerWeekComboBox";
             this.lossPerWeekComboBox.Size = new System.Drawing.Size(121, 21);
@@ -254,10 +266,10 @@
             this.activityLevelComboBox.Items.AddRange(new object[] {
             "Sedentary (Office Job)",
             "Light (1 - 2 days per week)",
-            "Moderate (3 - 5 days per week",
-            "Heavy (6 - 7 days per week",
+            "Moderate (3 - 5 days per week)",
+            "Heavy (6 - 7 days per week)",
             "Athlete (Twice a day)"});
-            this.activityLevelComboBox.Location = new System.Drawing.Point(166, 240);
+            this.activityLevelComboBox.Location = new System.Drawing.Point(166, 224);
             this.activityLevelComboBox.Name = "activityLevelComboBox";
             this.activityLevelComboBox.Size = new System.Drawing.Size(121, 21);
             this.activityLevelComboBox.TabIndex = 20;
@@ -265,17 +277,98 @@
             // caloriesOutputLabel
             // 
             this.caloriesOutputLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.caloriesOutputLabel.Location = new System.Drawing.Point(209, 383);
+            this.caloriesOutputLabel.Location = new System.Drawing.Point(209, 414);
             this.caloriesOutputLabel.Name = "caloriesOutputLabel";
             this.caloriesOutputLabel.Size = new System.Drawing.Size(103, 25);
             this.caloriesOutputLabel.TabIndex = 21;
             this.caloriesOutputLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // BMIhelp
+            // 
+            this.BMIhelp.BackColor = System.Drawing.SystemColors.InfoText;
+            // 
+            // helpBMI
+            // 
+            this.helpBMI.Image = global::LeanAndMean.Properties.Resources.qOXqp;
+            this.helpBMI.Location = new System.Drawing.Point(318, 374);
+            this.helpBMI.Name = "helpBMI";
+            this.helpBMI.Size = new System.Drawing.Size(13, 17);
+            this.helpBMI.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.helpBMI.TabIndex = 23;
+            this.helpBMI.TabStop = false;
+            this.BMIhelp.SetToolTip(this.helpBMI, "The body mass index (BMI) or Quetelet index is a measure of body fat derived from" +
+        " the mass (weight) and height of an individual.");
+            // 
+            // infoTDEE
+            // 
+            this.infoTDEE.IsBalloon = true;
+            this.infoTDEE.ShowAlways = true;
+            this.infoTDEE.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            // 
+            // helpTDEE
+            // 
+            this.helpTDEE.Image = global::LeanAndMean.Properties.Resources.qOXqp;
+            this.helpTDEE.Location = new System.Drawing.Point(318, 420);
+            this.helpTDEE.Name = "helpTDEE";
+            this.helpTDEE.Size = new System.Drawing.Size(13, 17);
+            this.helpTDEE.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.helpTDEE.TabIndex = 24;
+            this.helpTDEE.TabStop = false;
+            this.infoTDEE.SetToolTip(this.helpTDEE, "TDEE, total daily energy expenditure, is the amount of energy in calories you bur" +
+        "n per day. TDEE is best calculated by factoring in your BMR, or basal metabolic " +
+        "rate, and your activity level. ");
+            // 
+            // macroLabel
+            // 
+            this.macroLabel.AutoSize = true;
+            this.macroLabel.Location = new System.Drawing.Point(115, 261);
+            this.macroLabel.Name = "macroLabel";
+            this.macroLabel.Size = new System.Drawing.Size(45, 13);
+            this.macroLabel.TabIndex = 25;
+            this.macroLabel.Text = "Macros:";
+            // 
+            // macroComboBox
+            // 
+            this.macroComboBox.FormattingEnabled = true;
+            this.macroComboBox.Items.AddRange(new object[] {
+            "Maintain",
+            "Bulk",
+            "Cut"});
+            this.macroComboBox.Location = new System.Drawing.Point(166, 258);
+            this.macroComboBox.Name = "macroComboBox";
+            this.macroComboBox.Size = new System.Drawing.Size(121, 21);
+            this.macroComboBox.TabIndex = 26;
+            // 
+            // macroLabelOutputLabel
+            // 
+            this.macroLabelOutputLabel.AutoSize = true;
+            this.macroLabelOutputLabel.Location = new System.Drawing.Point(21, 287);
+            this.macroLabelOutputLabel.Name = "macroLabelOutputLabel";
+            this.macroLabelOutputLabel.Size = new System.Drawing.Size(120, 13);
+            this.macroLabelOutputLabel.TabIndex = 27;
+            this.macroLabelOutputLabel.Text = "Recommended Macros:";
+            this.macroLabelOutputLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // macroLabelOutput
+            // 
+            this.macroLabelOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.macroLabelOutput.Location = new System.Drawing.Point(24, 310);
+            this.macroLabelOutput.Name = "macroLabelOutput";
+            this.macroLabelOutput.Size = new System.Drawing.Size(288, 46);
+            this.macroLabelOutput.TabIndex = 28;
+            this.macroLabelOutput.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(347, 503);
+            this.Controls.Add(this.macroLabelOutput);
+            this.Controls.Add(this.macroLabelOutputLabel);
+            this.Controls.Add(this.macroComboBox);
+            this.Controls.Add(this.macroLabel);
+            this.Controls.Add(this.helpTDEE);
+            this.Controls.Add(this.helpBMI);
             this.Controls.Add(this.caloriesOutputLabel);
             this.Controls.Add(this.activityLevelComboBox);
             this.Controls.Add(this.lossPerWeekComboBox);
@@ -301,6 +394,8 @@
             this.Text = "Form1";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.helpBMI)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.helpTDEE)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -331,6 +426,14 @@
         private System.Windows.Forms.ComboBox lossPerWeekComboBox;
         private System.Windows.Forms.ComboBox activityLevelComboBox;
         private System.Windows.Forms.Label caloriesOutputLabel;
+        private System.Windows.Forms.ToolTip BMIhelp;
+        private System.Windows.Forms.ToolTip infoTDEE;
+        private System.Windows.Forms.PictureBox helpBMI;
+        private System.Windows.Forms.PictureBox helpTDEE;
+        private System.Windows.Forms.Label macroLabel;
+        private System.Windows.Forms.ComboBox macroComboBox;
+        private System.Windows.Forms.Label macroLabelOutputLabel;
+        private System.Windows.Forms.Label macroLabelOutput;
     }
 }
 
