@@ -13,9 +13,40 @@ namespace LeanAndMean
 {
     public partial class Form1 : Form
     {
+
+        //Set Variables
+        int weightPounds = 0, heightFeet = 0, heightInches = 0, age = 0, amountToLoseMultiplier = 0, maleMultiplier = 66, femaleMultipler = 655;
+        bool male = false;
+        bool female = false;
+        string lossPerWeek = "";
+        string activityLevel = "";
+        string macros = "";
+        float activityMultiplier = 0, weightConv, heightConv, maleBMR, femaleBMR, maleTDEE, femaleTDEE, BMI, protein, fat, carbs;
+        const float IN_TO_CM = 2.54f;
+        const float LB_TO_KG = 0.453592f;
+        System.Threading.Thread t;
+        
+        
+
+
+
+
+        private System.Windows.Forms.ErrorProvider weightErrorProvider;
+        private System.Windows.Forms.ErrorProvider heightftErrorProvider;
+        private System.Windows.Forms.ErrorProvider ageErrorProvider;
+        private System.Windows.Forms.ErrorProvider lossPerWeekErrorProvider;
+        private System.Windows.Forms.ErrorProvider activityLevelErrorProvider;
+
         public Form1()
         {
             InitializeComponent();
+            weightErrorProvider = new System.Windows.Forms.ErrorProvider();
+            heightftErrorProvider = new System.Windows.Forms.ErrorProvider();
+            ageErrorProvider = new System.Windows.Forms.ErrorProvider();
+            lossPerWeekErrorProvider = new System.Windows.Forms.ErrorProvider();
+            activityLevelErrorProvider = new System.Windows.Forms.ErrorProvider();
+
+
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -25,22 +56,13 @@ namespace LeanAndMean
 
         private void calcButton_Click(object sender, EventArgs e)
         {
-            //Set Variables
-            int weightPounds = 0, heightFeet = 0, heightInches = 0, age = 0, amountToLoseMultiplier = 0, maleMultiplier = 66, femaleMultipler = 655;
-            bool male = false;
-            bool female = false;
-            string lossPerWeek = "";
-            string activityLevel = "";
-            string macros = "";
-            float activityMultiplier = 0, weightConv, heightConv, maleBMR, femaleBMR, maleTDEE, femaleTDEE, BMI, protein, fat, carbs;
-            const float IN_TO_CM = 2.54f;
-            const float LB_TO_KG = 0.453592f;
 
 
             //Exception Handling
             try
             {
                 weightPounds = int.Parse(weightTextbox.Text);
+
             }
             catch
             {
@@ -245,7 +267,7 @@ namespace LeanAndMean
                     case "Maintain":
                         carbs = femaleTDEE * 0.5f;
                         protein = femaleTDEE * 0.2f;
-                        fat = femaleTDEE * 0.3f; 
+                        fat = femaleTDEE * 0.3f;
                         macroLabelOutput.Text = "Fats: " + fat + " Protein: " + protein + " Carbs: " + carbs;
                         break;
                     case "Bulk":
@@ -262,11 +284,16 @@ namespace LeanAndMean
                         macroLabelOutput.Text = "Fats: " + fat + " Protein: " + protein + " Carbs: " + carbs;
                         activityMultiplier = 1.55f;
                         break;
-
                 }
 
             }
 
+        }
+
+        private bool IsWeightValid()
+        {
+            // Determine whether the text box contains a zero-length string.
+            return (weightTextbox.Text.Length > 0);
         }
 
         private void exitButton_Click(object sender, EventArgs e)
@@ -286,85 +313,121 @@ namespace LeanAndMean
             lossPerWeekComboBox.SelectedIndex = -1;
 
         }
-    }
 
-    [Serializable]
-    internal class MacroNotFoundException : Exception
-    {
-        public MacroNotFoundException()
+        private void Form1_Load(object sender, EventArgs e)
         {
+
+            //calcButton.Enabled = false;
+
+            //t = new System.Threading.Thread(DoThisAllTheTime);
+            //t.Start();
         }
 
-        public MacroNotFoundException(string message) : base(message)
+        public void DoThisAllTheTime()
         {
+            //    bool weightCheck = false, heightftCheck = false, heightinCheck = false, ageCheck = false, sexCheck = false, lossPerWeekCheck = false,
+            //           activityCheck = false, macroCheck = false;
+            //    while (true)
+            //    {
+            //        if (IsWeightValid())
+            //        {
+            //            weightErrorProvider.SetError(weightTextbox, String.Empty);
+            //            weightPounds = int.Parse(weightTextbox.Text);
+            //            weightCheck = true;
+
+            //        }
+            //        else
+            //        {
+            //            //weightErrorProvider.SetError(weightTextbox, "Please enter Weight");
+            //            weightCheck = false;
+            //        }
+
+            //        if (weightCheck == true)
+            //        {
+            //            calcButton.Enabled = true;
+            //        }
+            //    }
         }
 
-        public MacroNotFoundException(string message, Exception innerException) : base(message, innerException)
+        [Serializable]
+        internal class MacroNotFoundException : Exception
         {
+            public MacroNotFoundException()
+            {
+            }
+
+            public MacroNotFoundException(string message) : base(message)
+            {
+            }
+
+            public MacroNotFoundException(string message, Exception innerException) : base(message, innerException)
+            {
+            }
+
+            protected MacroNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
+            {
+            }
         }
 
-        protected MacroNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
+        [Serializable]
+        internal class ActivityLevelNotFoundException : Exception
         {
-        }
-    }
+            public ActivityLevelNotFoundException()
+            {
+            }
 
-    [Serializable]
-    internal class ActivityLevelNotFoundException : Exception
-    {
-        public ActivityLevelNotFoundException()
-        {
-        }
+            public ActivityLevelNotFoundException(string message) : base(message)
+            {
+            }
 
-        public ActivityLevelNotFoundException(string message) : base(message)
-        {
-        }
+            public ActivityLevelNotFoundException(string message, Exception innerException) : base(message, innerException)
+            {
+            }
 
-        public ActivityLevelNotFoundException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        protected ActivityLevelNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
-    }
-
-    [Serializable]
-    internal class LossAmountNotFoundException : Exception
-    {
-        public LossAmountNotFoundException()
-        {
+            protected ActivityLevelNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
+            {
+            }
         }
 
-        public LossAmountNotFoundException(string message) : base(message)
+        [Serializable]
+        internal class LossAmountNotFoundException : Exception
         {
+            public LossAmountNotFoundException()
+            {
+            }
+
+            public LossAmountNotFoundException(string message) : base(message)
+            {
+            }
+
+            public LossAmountNotFoundException(string message, Exception innerException) : base(message, innerException)
+            {
+            }
+
+            protected LossAmountNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
+            {
+            }
         }
 
-        public LossAmountNotFoundException(string message, Exception innerException) : base(message, innerException)
+        [Serializable]
+        internal class GenderNotFoundException : Exception
         {
-        }
+            public GenderNotFoundException()
+            {
+            }
 
-        protected LossAmountNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
-    }
+            public GenderNotFoundException(string message) : base(message)
+            {
+            }
 
-    [Serializable]
-    internal class GenderNotFoundException : Exception
-    {
-        public GenderNotFoundException()
-        {
-        }
+            public GenderNotFoundException(string message, Exception innerException) : base(message, innerException)
+            {
+            }
 
-        public GenderNotFoundException(string message) : base(message)
-        {
-        }
-
-        public GenderNotFoundException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        protected GenderNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
+            protected GenderNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
+            {
+            }
         }
     }
 }
+
